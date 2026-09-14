@@ -4,14 +4,17 @@ import { Heart, ShoppingBag, Eye, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { CartContext } from '../context/CartContext';
 import { WishlistContext } from '../context/WishlistContext';
+
 const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
   const { isInWishlist, toggleWishlist } = useContext(WishlistContext);
   const [showActions, setShowActions] = useState(false);
   const inWishlist = isInWishlist(product.id);
+
   const handleProductTap = () => {
     setShowActions(!showActions);
   };
+
   return (
     <motion.div
       whileHover={{ y: -5 }}
@@ -27,18 +30,21 @@ const ProductCard = ({ product }) => {
           alt={product.name}
           className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
         />
+
         {/* Sale Badge */}
         {product.isSale && product.discount > 0 && (
           <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">
             -{product.discount}%
           </div>
         )}
+
         {/* New Badge */}
         {product.isNew && !product.isSale && (
           <div className="absolute top-3 right-3 bg-yellow-600 text-black px-3 py-1 rounded-full text-sm font-bold">
             NEW
           </div>
         )}
+
         {/* Action Buttons */}
         <div
           className={`
@@ -58,6 +64,7 @@ const ProductCard = ({ product }) => {
           >
             <Eye size={20} />
           </Link>
+
           {/* Wishlist */}
           <button
             onClick={(e) => {
@@ -76,6 +83,7 @@ const ProductCard = ({ product }) => {
               fill={inWishlist ? 'currentColor' : 'none'}
             />
           </button>
+
           {/* Add to Cart */}
           <button
             onClick={(e) => {
@@ -89,46 +97,77 @@ const ProductCard = ({ product }) => {
           </button>
         </div>
       </div>
+
       {/* Product Info */}
       <div className="p-4">
+
         {/* Category */}
         <p className="text-xs text-yellow-600 font-semibold uppercase mb-2">
           {product.category}
         </p>
+
         {/* Product Name */}
         <h3 className="text-lg font-bold text-black mb-2 truncate">
           {product.name}
         </h3>
+
         {/* Rating Stars */}
         <div className="flex items-center mb-3">
-          {[...Array(5)].map((_, i) => (
-            <Star
-              key={i}
-              size={14}
-              className={`${
-                i < Math.round(product.rating)
-                  ? 'fill-yellow-400 text-yellow-400'
-                  : 'text-gray-300'
-              }`}
-            />
-          ))}
+          {[...Array(5)].map((_, i) => {
+            const rating = Number(product.rating) || 0;
+            const fillPercentage = Math.max(
+              0,
+              Math.min(1, rating - i)
+            );
+
+            return (
+              <div
+                key={i}
+                className="relative"
+                style={{ width: '14px', height: '14px' }}
+              >
+                {/* Empty Star */}
+                <Star
+                  size={14}
+                  className="text-gray-300 absolute top-0 left-0"
+                />
+
+                {/* Filled Star */}
+                {fillPercentage > 0 && (
+                  <div
+                    className="absolute top-0 left-0 overflow-hidden"
+                    style={{ width: `${fillPercentage * 100}%` }}
+                  >
+                    <Star
+                      size={14}
+                      className="fill-yellow-400 text-yellow-400"
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+
           <span className="text-xs text-gray-600 ml-2">
             ({product.rating})
           </span>
         </div>
+
         {/* Price Section */}
         <div className="flex items-center justify-between mb-4">
           <div>
             <span className="text-xl font-bold text-black">
-              ${(product.price * (1 - product.discount / 100)).toFixed(2)}
+              ₦{(product.price * (1 - product.discount / 100)).toFixed(2)}
             </span>
+
             {product.discount > 0 && (
               <span className="text-sm text-gray-500 line-through ml-2">
-                ${product.price.toFixed(2)}
+                ₦{product.price.toFixed(2)}
               </span>
             )}
           </div>
         </div>
+
         {/* Add to Cart Button */}
         <button
           onClick={() => addToCart(product)}
@@ -140,4 +179,6 @@ const ProductCard = ({ product }) => {
     </motion.div>
   );
 };
+
 export default ProductCard;
+

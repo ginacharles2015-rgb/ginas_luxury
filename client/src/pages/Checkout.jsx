@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 // Checkout page with customer form
 const Checkout = () => {
-  const { cart, getTotalPrice, clearCart } = useContext(CartContext);
+  const { cart, getTotalPrice, clearCart, getItemPrice } = useContext(CartContext);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -35,9 +35,8 @@ const Checkout = () => {
     e.preventDefault();
 
     const totalPrice = getTotalPrice();
-    const shipping = totalPrice > 200 ? 0 : 10;
-    const tax = totalPrice * 0.08;
-    const finalTotal = totalPrice + shipping + tax;
+    const shipping = totalPrice >= 100000 ? 0 : 10000;
+    const finalTotal = totalPrice + shipping;
 
     try {
       const orderData = {
@@ -52,11 +51,11 @@ const Checkout = () => {
           productId: String(item._id || item.id),
           name: item.name,
           quantity: item.quantity,
-          price: item.price,
+          price: getItemPrice(item),
         })),
 
         subtotal: totalPrice,
-        tax: tax,
+        tax: 0,
         shipping: shipping,
         total: finalTotal,
         paymentMethod: "card",
@@ -139,9 +138,8 @@ const Checkout = () => {
   }
 
   const totalPrice = getTotalPrice();
-  const shipping = totalPrice > 200 ? 0 : 10;
-  const tax = totalPrice * 0.08;
-  const finalTotal = totalPrice + shipping + tax;
+  const shipping = totalPrice >= 100000 ? 0 : 10000;
+  const finalTotal = totalPrice + shipping;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -337,7 +335,7 @@ const Checkout = () => {
                 </span>
 
                 <span className="font-bold text-black">
-                  ${(item.price * item.quantity).toFixed(2)}
+                  ₦{(getItemPrice(item) * item.quantity).toFixed(2)}
                 </span>
 
               </div>
@@ -350,7 +348,7 @@ const Checkout = () => {
 
             <div className="flex justify-between text-gray-600">
               <span>Subtotal:</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>₦{totalPrice.toFixed(2)}</span>
             </div>
 
             <div className="flex justify-between text-gray-600">
@@ -358,13 +356,8 @@ const Checkout = () => {
               <span>
                 {shipping === 0
                   ? 'FREE'
-                  : `$${shipping.toFixed(2)}`}
+                  : `₦${shipping.toFixed(2)}`}
               </span>
-            </div>
-
-            <div className="flex justify-between text-gray-600">
-              <span>Tax (8%):</span>
-              <span>${tax.toFixed(2)}</span>
             </div>
 
           </div>
@@ -376,7 +369,7 @@ const Checkout = () => {
             </span>
 
             <span className="text-2xl font-bold text-yellow-600">
-              ${finalTotal.toFixed(2)}
+              ₦{finalTotal.toFixed(2)}
             </span>
 
           </div>
@@ -389,3 +382,4 @@ const Checkout = () => {
 };
 
 export default Checkout;
+

@@ -1,41 +1,112 @@
+
 // Complete product catalog for Gina's Luxury Fashion
 
-import gown2 from "../assets/2clgown.jpg";
-import armcuff from "../assets/armcuff.jpg";
-import asokesk from "../assets/asokesk.jpg";
-import bangle from "../assets/bangle.jpg";
-import bluegown from "../assets/bluegown.jpg";
-import blueskirt from "../assets/blueskirt.jpg";
-import bracelet from "../assets/bracelet.jpg";
-import brownbodycon from "../assets/brownbodycon.jpg";
-import brownpants from "../assets/brownpants.jpg";
-import browntop from "../assets/browntop.jpg";
-import cropyellowtop from "../assets/cropyellowtop.jpg";
-import floralgown from "../assets/floralgown.jpg";
-import floralskirt from "../assets/floralskirt.jpg";
-import flowertop from "../assets/flowertop.jpg";
-import gatheredtop from "../assets/gatheredtop.jpg";
-import glasses from "../assets/glasses.jpg";
-import goldbelt from "../assets/goldbelt.jpg";
-import greengown from "../assets/greengown.jpg";
-import greytop from "../assets/greytop.jpg";
-import hairclips from "../assets/hairclips.jpg";
-import jean from "../assets/jean.jpg";
-import jewelryset from "../assets/jewelryset.jpg";
-import longpinkgown from "../assets/longpinkgown.jpg";
-import multigown from "../assets/multigown.jpg";
-import necklace from "../assets/necklace.jpg";
-import pinkgown from "../assets/pinkgown.jpg";
-import pinkskirt from "../assets/pinkskirt.jpg";
-import pinktop from "../assets/pinktop.jpg";
-import ribbon from "../assets/ribbon.jpg";
-import satinskirt from "../assets/satinskirt.jpg";
-import seagreentop from "../assets/seagreentop.jpg";
-import tailoredshorts from "../assets/tailoredshorts.jpg";
-import whitegown from "../assets/whitegown.jpg";
-import whitetop from "../assets/whitetop.jpg";
-import widepants from "../assets/widepants.jpg";
-import yellow2top from "../assets/yellow2top.jpg";
+const cloudinaryImages = {
+  gown2:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466943/2clgown_o2zzip.jpg",
+
+  armcuff:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466935/armcuff_ddyrxp.jpg",
+
+  asokesk:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466947/asokesk_okioia.jpg",
+
+  bangle:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466948/bangle_saslqe.jpg",
+
+  bluegown:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466962/bluegown_pzcrba.jpg",
+
+  blueskirt:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466952/blueskirt_b1uaue.jpg",
+
+  bracelet:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466941/bracelet_bkvdxx.jpg",
+
+  brownbodycon:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466954/brownbodycon_kxx9fp.jpg",
+
+  brownpants:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466954/brownpants_j7gvk5.jpg",
+
+  browntop:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466952/browntop_yyl2ev.jpg",
+
+  cropyellowtop:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466959/cropyellowtop_gohbhd.jpg",
+
+  floralgown:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466971/floralgown_tdulgq.jpg",
+
+  floralskirt:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466961/floralskirt_fqnszz.jpg",
+
+  flowertop:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466960/flowertop_oqyu6p.jpg",
+
+  gatheredtop:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466962/gatheredtop_usqtbb.jpg",
+
+  glasses:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466965/glasses_ttcbjb.jpg",
+
+  goldbelt:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466962/goldbelt_ppu1c7.jpg",
+
+  greengown:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466967/greengown_gv7kfm.jpg",
+
+  hairclips:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466965/hairclips_zmvrgk.jpg",
+
+  jean:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466965/jean_eghwjb.jpg",
+
+  jewelryset:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466966/jewelryset_eghabm.jpg",
+
+  longpinkgown:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466966/longpinkgown_qgw4xv.jpg",
+
+  multigown:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466968/multigown_j7trzn.jpg",
+
+  necklace:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466967/necklace_uiblr2.jpg",
+
+  pinkgown:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466970/pinkgown_j375gy.jpg",
+
+  pinkskirt:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466969/pinkskirt_s1bdns.jpg",
+
+  pinktop:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466975/pinktop_gaxddp.jpg",
+
+  ribbon:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466971/ribbon_sei9xz.jpg",
+
+  satinskirt:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466971/satinskirt_ltm7sq.jpg",
+
+  seagreentop:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466972/seagreentop_kqoirb.jpg",
+
+  tailoredshorts:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466972/tailoredshorts_p0wzo7.jpg",
+
+  whitegown:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466973/whitegown_yjvtky.jpg",
+
+  whitetop:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466975/whitetop_nxwqw1.jpg",
+
+  widepants:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466973/widepants_y1yndm.jpg",
+
+  yellow2top:
+    "https://res.cloudinary.com/dda6odnoo/image/upload/v1788466974/yellow2top_zq7fin.jpg",
+};
 
 export const Products = [
   // =========================
@@ -48,7 +119,7 @@ export const Products = [
     category: "dresses",
     price: 129.99,
     rating: 4.8,
-    image: gown2,
+    image: cloudinaryImages.gown2,
     description: "Elegant gown perfect for special occasions.",
     isNew: true,
     isSale: false,
@@ -61,7 +132,7 @@ export const Products = [
     category: "dresses",
     price: 249.99,
     rating: 4.9,
-    image: bluegown,
+    image: cloudinaryImages.bluegown,
     description: "Beautiful blue gown with an elegant and stylish design.",
     isNew: true,
     isSale: true,
@@ -74,7 +145,7 @@ export const Products = [
     category: "dresses",
     price: 99.99,
     rating: 4.7,
-    image: floralgown,
+    image: cloudinaryImages.floralgown,
     description: "Beautiful floral gown for a feminine and elegant look.",
     isNew: false,
     isSale: true,
@@ -87,7 +158,7 @@ export const Products = [
     category: "dresses",
     price: 189.99,
     rating: 4.8,
-    image: greengown,
+    image: cloudinaryImages.greengown,
     description: "Elegant green gown perfect for special occasions.",
     isNew: true,
     isSale: false,
@@ -100,7 +171,7 @@ export const Products = [
     category: "dresses",
     price: 79.99,
     rating: 4.6,
-    image: longpinkgown,
+    image: cloudinaryImages.longpinkgown,
     description: "A beautiful long pink gown with a sophisticated style.",
     isNew: false,
     isSale: true,
@@ -113,7 +184,7 @@ export const Products = [
     category: "dresses",
     price: 149.99,
     rating: 4.8,
-    image: multigown,
+    image: cloudinaryImages.multigown,
     description: "Stylish multi-coloured gown for a bold fashion look.",
     isNew: false,
     isSale: false,
@@ -126,7 +197,7 @@ export const Products = [
     category: "dresses",
     price: 199.99,
     rating: 4.9,
-    image: pinkgown,
+    image: cloudinaryImages.pinkgown,
     description: "Elegant pink gown designed for a beautiful feminine look.",
     isNew: true,
     isSale: false,
@@ -139,7 +210,7 @@ export const Products = [
     category: "dresses",
     price: 159.99,
     rating: 4.9,
-    image: whitegown,
+    image: cloudinaryImages.whitegown,
     description: "Classic white gown with an elegant finish.",
     isNew: true,
     isSale: false,
@@ -152,7 +223,7 @@ export const Products = [
     category: "dresses",
     price: 119.99,
     rating: 4.7,
-    image: brownbodycon,
+    image: cloudinaryImages.brownbodycon,
     description: "Stylish brown bodycon dress with a flattering fit.",
     isNew: false,
     isSale: false,
@@ -169,7 +240,7 @@ export const Products = [
     category: "tops",
     price: 89.99,
     rating: 4.7,
-    image: browntop,
+    image: cloudinaryImages.browntop,
     description: "Simple and stylish brown top.",
     isNew: false,
     isSale: true,
@@ -182,7 +253,7 @@ export const Products = [
     category: "tops",
     price: 79.99,
     rating: 4.6,
-    image: cropyellowtop,
+    image: cloudinaryImages.cropyellowtop,
     description: "Trendy crop yellow top for a stylish casual look.",
     isNew: true,
     isSale: false,
@@ -195,7 +266,7 @@ export const Products = [
     category: "tops",
     price: 99.99,
     rating: 4.8,
-    image: flowertop,
+    image: cloudinaryImages.flowertop,
     description: "Beautiful floral top with a feminine design.",
     isNew: false,
     isSale: true,
@@ -208,7 +279,7 @@ export const Products = [
     category: "tops",
     price: 109.99,
     rating: 4.8,
-    image: gatheredtop,
+    image: cloudinaryImages.gatheredtop,
     description: "Elegant gathered top for a sophisticated look.",
     isNew: false,
     isSale: false,
@@ -221,7 +292,7 @@ export const Products = [
     category: "tops",
     price: 89.99,
     rating: 4.7,
-    image: pinktop,
+    image: cloudinaryImages.pinktop,
     description: "Beautiful pink top for everyday elegance.",
     isNew: true,
     isSale: false,
@@ -234,7 +305,7 @@ export const Products = [
     category: "tops",
     price: 99.99,
     rating: 4.8,
-    image: seagreentop,
+    image: cloudinaryImages.seagreentop,
     description: "Fresh sea green top with a stylish finish.",
     isNew: false,
     isSale: false,
@@ -247,7 +318,7 @@ export const Products = [
     category: "tops",
     price: 79.99,
     rating: 4.6,
-    image: whitetop,
+    image: cloudinaryImages.whitetop,
     description: "Classic white top that pairs beautifully with any outfit.",
     isNew: false,
     isSale: true,
@@ -260,7 +331,7 @@ export const Products = [
     category: "tops",
     price: 89.99,
     rating: 4.7,
-    image: yellow2top,
+    image: cloudinaryImages.yellow2top,
     description: "Bright yellow top for a stylish and confident look.",
     isNew: true,
     isSale: false,
@@ -277,7 +348,7 @@ export const Products = [
     category: "bottoms",
     price: 89.99,
     rating: 4.7,
-    image: blueskirt,
+    image: cloudinaryImages.blueskirt,
     description: "Stylish blue skirt perfect for different occasions.",
     isNew: false,
     isSale: true,
@@ -290,7 +361,7 @@ export const Products = [
     category: "bottoms",
     price: 99.99,
     rating: 4.8,
-    image: floralskirt,
+    image: cloudinaryImages.floralskirt,
     description: "Beautiful floral skirt with a feminine finish.",
     isNew: true,
     isSale: false,
@@ -303,7 +374,7 @@ export const Products = [
     category: "bottoms",
     price: 109.99,
     rating: 4.8,
-    image: brownpants,
+    image: cloudinaryImages.brownpants,
     description: "Elegant brown pants for a sophisticated look.",
     isNew: false,
     isSale: true,
@@ -316,7 +387,7 @@ export const Products = [
     category: "bottoms",
     price: 119.99,
     rating: 4.7,
-    image: jean,
+    image: cloudinaryImages.jean,
     description: "Classic jeans designed for everyday comfort and style.",
     isNew: false,
     isSale: false,
@@ -329,7 +400,7 @@ export const Products = [
     category: "bottoms",
     price: 129.99,
     rating: 4.8,
-    image: satinskirt,
+    image: cloudinaryImages.satinskirt,
     description: "Elegant satin skirt with a smooth luxurious finish.",
     isNew: true,
     isSale: false,
@@ -342,7 +413,7 @@ export const Products = [
     category: "bottoms",
     price: 79.99,
     rating: 4.6,
-    image: tailoredshorts,
+    image: cloudinaryImages.tailoredshorts,
     description: "Smart tailored shorts with a clean modern finish.",
     isNew: false,
     isSale: true,
@@ -355,7 +426,7 @@ export const Products = [
     category: "bottoms",
     price: 119.99,
     rating: 4.8,
-    image: widepants,
+    image: cloudinaryImages.widepants,
     description: "Comfortable wide-leg pants with an elegant silhouette.",
     isNew: true,
     isSale: false,
@@ -368,7 +439,7 @@ export const Products = [
     category: "bottoms",
     price: 139.99,
     rating: 4.8,
-    image: asokesk,
+    image: cloudinaryImages.asokesk,
     description: "Beautiful Asoke-inspired skirt with a stylish design.",
     isNew: true,
     isSale: false,
@@ -385,8 +456,9 @@ export const Products = [
     category: "accessories",
     price: 49.99,
     rating: 4.8,
-    image: armcuff,
-    description: "Elegant arm cuff accessory for a luxurious finishing touch.",
+    image: cloudinaryImages.armcuff,
+    description:
+      "Elegant arm cuff accessory for a luxurious finishing touch.",
     isNew: true,
     isSale: false,
     discount: 0,
@@ -398,7 +470,7 @@ export const Products = [
     category: "accessories",
     price: 39.99,
     rating: 4.7,
-    image: bangle,
+    image: cloudinaryImages.bangle,
     description: "Elegant bangle designed to complement any outfit.",
     isNew: false,
     isSale: false,
@@ -411,7 +483,7 @@ export const Products = [
     category: "accessories",
     price: 44.99,
     rating: 4.8,
-    image: bracelet,
+    image: cloudinaryImages.bracelet,
     description: "Stylish bracelet for an elegant everyday look.",
     isNew: true,
     isSale: false,
@@ -424,7 +496,7 @@ export const Products = [
     category: "accessories",
     price: 89.99,
     rating: 4.8,
-    image: glasses,
+    image: cloudinaryImages.glasses,
     description: "Stylish glasses that add a fashionable finishing touch.",
     isNew: false,
     isSale: true,
@@ -437,7 +509,7 @@ export const Products = [
     category: "accessories",
     price: 59.99,
     rating: 4.7,
-    image: goldbelt,
+    image: cloudinaryImages.goldbelt,
     description: "Elegant gold belt for a luxurious fashion statement.",
     isNew: true,
     isSale: false,
@@ -450,7 +522,7 @@ export const Products = [
     category: "accessories",
     price: 29.99,
     rating: 4.6,
-    image: hairclips,
+    image: cloudinaryImages.hairclips,
     description: "Beautiful hair clips for a stylish finishing touch.",
     isNew: false,
     isSale: false,
@@ -463,7 +535,7 @@ export const Products = [
     category: "accessories",
     price: 149.99,
     rating: 4.9,
-    image: jewelryset,
+    image: cloudinaryImages.jewelryset,
     description: "Elegant jewelry set designed for special occasions.",
     isNew: true,
     isSale: true,
@@ -476,7 +548,7 @@ export const Products = [
     category: "accessories",
     price: 79.99,
     rating: 4.8,
-    image: necklace,
+    image: cloudinaryImages.necklace,
     description: "Elegant necklace that adds a luxurious finishing touch.",
     isNew: false,
     isSale: false,
@@ -489,7 +561,7 @@ export const Products = [
     category: "accessories",
     price: 24.99,
     rating: 4.6,
-    image: ribbon,
+    image: cloudinaryImages.ribbon,
     description: "Simple and stylish ribbon accessory.",
     isNew: false,
     isSale: false,
@@ -502,7 +574,7 @@ export const Products = [
     category: "accessories",
     price: 34.99,
     rating: 4.7,
-    image: hairclips,
+    image: cloudinaryImages.hairclips,
     description: "Stylish hair accessory for completing your look.",
     isNew: true,
     isSale: false,
@@ -515,10 +587,11 @@ export const Products = [
     category: "accessories",
     price: 69.99,
     rating: 4.7,
-    image: asokesk,
+    image: cloudinaryImages.asokesk,
     description: "Fashion accessory for a stylish and elegant look.",
     isNew: false,
     isSale: false,
     discount: 0,
   },
 ];
+

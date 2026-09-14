@@ -55,9 +55,17 @@ const CartProvider = ({ children }) => {
     setCart([]);
   };
 
+  // Calculate the actual selling price after discount
+  const getItemPrice = (item) => {
+    return item.price * (1 - (item.discount || 0) / 100);
+  };
+
   // Calculate total price of all items in cart
   const getTotalPrice = () => {
-    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return cart.reduce(
+      (total, item) => total + (getItemPrice(item) * item.quantity),
+      0
+    );
   };
 
   // Get total number of items in cart
@@ -72,6 +80,7 @@ const CartProvider = ({ children }) => {
     updateQuantity,
     clearCart,
     getTotalPrice,
+    getItemPrice,
     getTotalItems
   };
 

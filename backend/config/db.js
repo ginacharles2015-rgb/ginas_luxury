@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import dns from "node:dns";
 
 dotenv.config();
+
+// Use reliable public DNS servers for MongoDB Atlas SRV lookup
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const connectDB = async () => {
   try {

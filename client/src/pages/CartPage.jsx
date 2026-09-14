@@ -6,11 +6,23 @@ import { motion } from 'framer-motion';
 
 // Shopping cart page
 const CartPage = () => {
-  const { cart, removeFromCart, updateQuantity, getTotalPrice } = useContext(CartContext);
+  const {
+    cart,
+    removeFromCart,
+    updateQuantity,
+    getTotalPrice,
+    getItemPrice
+  } = useContext(CartContext);
+
   const totalPrice = getTotalPrice();
-  const shipping = totalPrice > 0 ? (totalPrice > 200 ? 0 : 10) : 0;
-  const tax = totalPrice * 0.08;
-  const finalTotal = totalPrice + shipping + tax;
+
+  // Free shipping on orders of ₦100,000 or more
+  const shipping = totalPrice > 0
+    ? (totalPrice >= 100000 ? 0 : 10000)
+    : 0;
+
+  // Tax removed
+  const finalTotal = totalPrice + shipping;
 
   if (cart.length === 0) {
     return (
@@ -53,30 +65,47 @@ const CartPage = () => {
 
                 {/* Product Details */}
                 <div className="flex-1">
-                  <h3 className="font-bold text-lg text-black mb-1">{item.name}</h3>
-                  <p className="text-gray-600 text-sm mb-2">{item.category}</p>
-                  <p className="font-bold text-yellow-600">${item.price.toFixed(2)}</p>
+                  <h3 className="font-bold text-lg text-black mb-1">
+                    {item.name}
+                  </h3>
+
+                  <p className="text-gray-600 text-sm mb-2">
+                    {item.category}
+                  </p>
+
+                  <p className="font-bold text-yellow-600">
+                    ₦{getItemPrice(item).toFixed(2)}
+                  </p>
                 </div>
 
                 {/* Quantity Controls */}
                 <div className="flex flex-col items-center gap-2">
                   <div className="flex items-center gap-2 border border-gray-300 rounded">
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                      onClick={() =>
+                        updateQuantity(item.id, item.quantity - 1)
+                      }
                       className="p-1 hover:bg-gray-200 transition"
                     >
                       <Minus size={16} />
                     </button>
-                    <span className="px-4 font-bold">{item.quantity}</span>
+
+                    <span className="px-4 font-bold">
+                      {item.quantity}
+                    </span>
+
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                      onClick={() =>
+                        updateQuantity(item.id, item.quantity + 1)
+                      }
                       className="p-1 hover:bg-gray-200 transition"
                     >
                       <Plus size={16} />
                     </button>
                   </div>
+
                   <p className="text-sm text-gray-600">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    ₦{(getItemPrice(item) * item.quantity).toFixed(2)}
                   </p>
                 </div>
 
@@ -99,26 +128,34 @@ const CartPage = () => {
           animate={{ opacity: 1, x: 0 }}
           className="bg-white rounded-lg shadow-lg p-6 h-fit sticky top-24"
         >
-          <h2 className="text-2xl font-bold mb-6 text-black">Order Summary</h2>
+          <h2 className="text-2xl font-bold mb-6 text-black">
+            Order Summary
+          </h2>
 
           <div className="space-y-4 mb-6 pb-6 border-b">
             <div className="flex justify-between text-gray-600">
               <span>Subtotal:</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>₦{totalPrice.toFixed(2)}</span>
             </div>
+
             <div className="flex justify-between text-gray-600">
               <span>Shipping:</span>
-              <span>{shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}</span>
-            </div>
-            <div className="flex justify-between text-gray-600">
-              <span>Tax (8%):</span>
-              <span>${tax.toFixed(2)}</span>
+              <span>
+                {shipping === 0
+                  ? 'FREE'
+                  : `₦${shipping.toFixed(2)}`}
+              </span>
             </div>
           </div>
 
           <div className="flex justify-between mb-6">
-            <span className="text-xl font-bold text-black">Total:</span>
-            <span className="text-2xl font-bold text-yellow-600">${finalTotal.toFixed(2)}</span>
+            <span className="text-xl font-bold text-black">
+              Total:
+            </span>
+
+            <span className="text-2xl font-bold text-yellow-600">
+              ₦{finalTotal.toFixed(2)}
+            </span>
           </div>
 
           <Link

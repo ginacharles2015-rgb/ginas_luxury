@@ -110,12 +110,12 @@ const ProductDetails = () => {
           {/* Price */}
           <div className="mb-6">
             <p className="text-4xl font-bold text-black mb-2">
-              ${(product.price * (1 - product.discount / 100)).toFixed(2)}
+              ₦{(product.price * (1 - product.discount / 100)).toFixed(2)}
             </p>
 
             {product.discount > 0 && (
               <p className="text-lg text-gray-500 line-through">
-                ${product.price.toFixed(2)}
+                ₦{product.price.toFixed(2)}
               </p>
             )}
           </div>
@@ -182,7 +182,7 @@ const ProductDetails = () => {
           {/* Shipping Info */}
           <div className="bg-gray-100 p-4 rounded-lg">
             <p className="text-sm text-gray-600">
-              <strong>Free shipping</strong> on orders over $100 •{' '}
+              <strong>Free shipping</strong> on orders of ₦100,000 or more •{' '}
               <strong>30-day return</strong> policy
             </p>
           </div>
@@ -218,3 +218,4 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
