@@ -6,7 +6,7 @@ export const ProductContext = createContext();
 
 const ProductProvider = ({ children }) => {
   // Backend API URL
-  const API_URL = 'http://localhost:5001/api/products?limit=100';
+  const API_URL = 'https://ginas-luxury.onrender.com/api/products?limit=100';
 
   // State to store all products
   // Starts with local products so the website doesn't break while the API loads
@@ -144,3 +144,4 @@ const ProductProvider = ({ children }) => {
 };
 
 export default ProductProvider;
+
