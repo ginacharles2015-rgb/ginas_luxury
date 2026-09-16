@@ -61,7 +61,7 @@ const Checkout = () => {
         paymentMethod: "card",
       };
 
-      const response = await fetch("http://172.20.10.6:5001/api/orders", {
+      const response = await fetch("https://ginas-luxury.onrender.com/api/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
