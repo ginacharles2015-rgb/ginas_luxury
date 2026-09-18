@@ -20,7 +20,7 @@ const Footer = () => {
       setMessage('');
 
       const response = await fetch(
-        'http://localhost:5001/api/subscribers',
+        'https://ginas-luxury.onrender.com/api/subscribers',
         {
           method: 'POST',
           headers: {
@@ -238,3 +238,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
