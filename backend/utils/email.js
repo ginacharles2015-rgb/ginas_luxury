@@ -1,9 +1,9 @@
-
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: parseInt(process.env.EMAIL_PORT, 10),
+  family: 4,
   secure: parseInt(process.env.EMAIL_PORT, 10) === 465,
   auth: {
     user: process.env.EMAIL_USER,
@@ -23,4 +23,3 @@ export const sendWelcomeEmail = async (email) => {
 };
 
 export default transporter;
-
