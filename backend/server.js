@@ -12,7 +12,19 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ginas-luxury.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 app.use(express.json()); // Parse JSON request bodies
 
 // Route mounts
@@ -36,3 +48,4 @@ const PORT = process.env.PORT || 5001;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Gina's Luxury Backend is running on port ${PORT}`);
 });
+
