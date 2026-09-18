@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { CartContext } from '../context/CartContext';
@@ -13,8 +13,18 @@ const PaymentSuccess = () => {
     'Please wait while we confirm your payment...'
   );
 
+  // Prevent the payment verification process from running more than once.
+  const hasVerified = useRef(false);
+
   useEffect(() => {
     const verifyPayment = async () => {
+      // Stop if this payment has already been processed on this page.
+      if (hasVerified.current) {
+        return;
+      }
+
+      hasVerified.current = true;
+
       try {
         // Get the Paystack reference from the URL.
         // Example:
