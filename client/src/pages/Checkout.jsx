@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 // Checkout page with customer form
 const Checkout = () => {
-  const { cart, getTotalPrice, clearCart, getItemPrice } = useContext(CartContext);
+  const { cart, getTotalPrice, getItemPrice } = useContext(CartContext);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -15,13 +15,10 @@ const Checkout = () => {
     address: '',
     city: '',
     state: '',
-    zip: '',
-    cardNumber: '',
-    cardExpiry: '',
-    cardCVC: ''
+    zip: ''
   });
 
-  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -30,7 +27,7 @@ const Checkout = () => {
     });
   };
 
-  // Place order
+  // Initialize Paystack payment
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,13 +35,18 @@ const Checkout = () => {
     const shipping = totalPrice >= 100000 ? 0 : 10000;
     const finalTotal = totalPrice + shipping;
 
+    setIsLoading(true);
+
     try {
-      const orderData = {
+      // Save the order information temporarily in the browser.
+      // We will use this information after Paystack verifies the payment.
+      const pendingOrderData = {
         customerName: `${formData.firstName} ${formData.lastName}`,
         customerEmail: formData.email,
         customerPhone: formData.phone,
         shippingAddress: formData.address,
         city: formData.city,
+        state: formData.state,
         zipCode: formData.zip,
 
         items: cart.map((item) => ({
@@ -58,71 +60,75 @@ const Checkout = () => {
         tax: 0,
         shipping: shipping,
         total: finalTotal,
-        paymentMethod: "card",
+        paymentMethod: "paystack",
       };
 
-      const response = await fetch("https://ginas-luxury.onrender.com/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
-      });
+      // Store the pending order temporarily.
+      sessionStorage.setItem(
+        "pendingOrder",
+        JSON.stringify(pendingOrderData)
+      );
+
+      // Ask our backend to initialize the Paystack transaction.
+      const response = await fetch(
+        "https://ginas-luxury.onrender.com/api/orders/paystack/initialize",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            customerEmail: formData.email,
+            customerName: `${formData.firstName} ${formData.lastName}`,
+            customerPhone: formData.phone,
+            total: finalTotal,
+          }),
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to place order");
+        throw new Error(
+          data.message || "Unable to initialize payment"
+        );
       }
 
-      console.log("Order created successfully:", data);
+      // Make sure Paystack gave us a checkout URL.
+      if (!data.authorizationUrl) {
+        throw new Error("Paystack checkout URL was not returned");
+      }
 
-      // Clear cart after successful order
-      clearCart();
+      // Save the Paystack reference so we know which transaction
+      // belongs to this pending order.
+      sessionStorage.setItem(
+        "paystackReference",
+        data.reference
+      );
 
-      // Show success page
-      setOrderPlaced(true);
+      // Send the customer to Paystack's secure checkout page.
+      window.location.href = data.authorizationUrl;
 
     } catch (error) {
-      console.error("Order error:", error);
-      alert("Something went wrong while placing your order. Please try again.");
+      console.error("Payment initialization error:", error);
+
+      // Remove the pending order if payment initialization failed.
+      sessionStorage.removeItem("pendingOrder");
+      sessionStorage.removeItem("paystackReference");
+
+      alert(
+        "Something went wrong while starting your payment. Please try again."
+      );
+
+      setIsLoading(false);
     }
   };
-
-  // Show success message
-  if (orderPlaced) {
-    return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          className="mb-6"
-        >
-          <div className="text-6xl text-yellow-600 mb-4">✓</div>
-        </motion.div>
-
-        <h1 className="text-4xl font-bold mb-4 text-black">
-          Order Placed Successfully!
-        </h1>
-
-        <p className="text-xl text-gray-600 mb-8">
-          Thank you for your purchase. You will receive a confirmation email shortly.
-        </p>
-
-        <Link
-          to="/"
-          className="inline-block bg-yellow-600 text-black px-8 py-3 rounded-lg font-bold hover:bg-yellow-500 transition"
-        >
-          Continue Shopping
-        </Link>
-      </div>
-    );
-  }
 
   // Empty cart
   if (cart.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+
         <h1 className="text-4xl font-bold mb-6 text-black">
           Your cart is empty
         </h1>
@@ -133,6 +139,7 @@ const Checkout = () => {
         >
           Back to Shopping
         </Link>
+
       </div>
     );
   }
@@ -258,49 +265,24 @@ const Checkout = () => {
             </div>
 
             {/* Payment Information */}
-            <h2 className="text-2xl font-bold mb-6 text-black">
+            <h2 className="text-2xl font-bold mb-4 text-black">
               Payment Information
             </h2>
 
-            <input
-              type="text"
-              name="cardNumber"
-              placeholder="Card Number"
-              value={formData.cardNumber}
-              onChange={handleInputChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-yellow-600 mb-4"
-            />
-
-            <div className="grid grid-cols-2 gap-4 mb-8">
-
-              <input
-                type="text"
-                name="cardExpiry"
-                placeholder="MM/YY"
-                value={formData.cardExpiry}
-                onChange={handleInputChange}
-                required
-                className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-yellow-600"
-              />
-
-              <input
-                type="text"
-                name="cardCVC"
-                placeholder="CVC"
-                value={formData.cardCVC}
-                onChange={handleInputChange}
-                required
-                className="px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-yellow-600"
-              />
-
-            </div>
+            <p className="text-gray-600 mb-8">
+              You will be redirected to Paystack to complete your payment securely.
+            </p>
 
             <button
               type="submit"
-              className="w-full bg-yellow-600 text-black py-4 rounded-lg font-bold hover:bg-yellow-500 transition text-lg"
+              disabled={isLoading}
+              className={`w-full bg-yellow-600 text-black py-4 rounded-lg font-bold transition text-lg ${
+                isLoading
+                  ? 'opacity-60 cursor-not-allowed'
+                  : 'hover:bg-yellow-500'
+              }`}
             >
-              PLACE ORDER
+              {isLoading ? 'REDIRECTING TO PAYSTACK...' : 'PAY WITH PAYSTACK'}
             </button>
 
           </motion.form>

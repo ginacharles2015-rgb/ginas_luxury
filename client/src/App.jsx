@@ -11,6 +11,7 @@ import ProductDetails from './pages/ProductDetails';
 import CartPage from './pages/CartPage';
 import WishlistPage from './pages/WishlistPage';
 import Checkout from './pages/Checkout';
+import PaymentSuccess from './pages/PaymentSuccess';
 
 // Main App Component - Sets up routing and global context providers
 function App() {
@@ -39,6 +40,9 @@ function App() {
                 
                 {/* Checkout page */}
                 <Route path="/checkout" element={<Checkout />} />
+
+                {/* Paystack payment success page */}
+                <Route path="/payment-success" element={<PaymentSuccess />} />
                 
                 {/* New Arrivals page */}
                 <Route path="/new-arrivals" element={<Products filter="new" />} />
@@ -56,3 +60,4 @@ function App() {
 }
 
 export default App;
+
