@@ -38,12 +38,10 @@ export const subscribe = asyncHandler(async (req, res) => {
   // Create new subscriber
   const subscriber = await Subscriber.create({ email });
 
-  // Send welcome email (non-blocking: failure should not break subscription)
-  try {
-    await sendWelcomeEmail(email);
-  } catch (emailError) {
+  // Send welcome email without blocking the subscription response
+  sendWelcomeEmail(email).catch((emailError) => {
     console.error("Failed to send welcome email:", emailError.message);
-  }
+  });
 
   res.status(201).json({
     message: "Successfully subscribed to newsletter",
@@ -132,3 +130,4 @@ export const getSubscriberCount = asyncHandler(async (req, res) => {
     inactiveSubscribers: totalSubscribers - activeSubscribers,
   });
 });
+
