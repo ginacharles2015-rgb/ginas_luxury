@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import dns from "node:dns";
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
