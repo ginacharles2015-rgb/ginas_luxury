@@ -39,9 +39,15 @@ export const subscribe = asyncHandler(async (req, res) => {
   const subscriber = await Subscriber.create({ email });
 
   // Send welcome email without blocking the subscription response
-  sendWelcomeEmail(email).catch((emailError) => {
-    console.error("Failed to send welcome email:", emailError.message);
-  });
+  console.log("About to send welcome email to:", email);
+
+  sendWelcomeEmail(email)
+    .then(() => {
+      console.log("Welcome email sent successfully to:", email);
+    })
+    .catch((emailError) => {
+      console.error("Failed to send welcome email:", emailError);
+    });
 
   res.status(201).json({
     message: "Successfully subscribed to newsletter",
@@ -108,7 +114,6 @@ export const getSubscribers = asyncHandler(async (req, res) => {
     pagination: {
       currentPage: pageNum,
       totalPages,
-      totalSubscribers,
       hasNextPage: pageNum < totalPages,
       hasPrevPage: pageNum > 1,
     },
@@ -130,4 +135,3 @@ export const getSubscriberCount = asyncHandler(async (req, res) => {
     inactiveSubscribers: totalSubscribers - activeSubscribers,
   });
 });
-
