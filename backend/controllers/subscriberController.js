@@ -39,15 +39,9 @@ export const subscribe = asyncHandler(async (req, res) => {
   const subscriber = await Subscriber.create({ email });
 
   // Send welcome email without blocking the subscription response
-  console.log("About to send welcome email to:", email);
-
-  sendWelcomeEmail(email)
-    .then(() => {
-      console.log("Welcome email sent successfully to:", email);
-    })
-    .catch((emailError) => {
-      console.error("Failed to send welcome email:", emailError);
-    });
+  sendWelcomeEmail(email).catch((emailError) => {
+    console.error("Failed to send welcome email:", emailError);
+  });
 
   res.status(201).json({
     message: "Successfully subscribed to newsletter",
