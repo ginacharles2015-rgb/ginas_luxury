@@ -9,10 +9,21 @@ const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartContext);
   const { isInWishlist, toggleWishlist } = useContext(WishlistContext);
   const [showActions, setShowActions] = useState(false);
+  const [showAdded, setShowAdded] = useState(false);
+
   const inWishlist = isInWishlist(product.id);
 
   const handleProductTap = () => {
     setShowActions(!showActions);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    setShowAdded(true);
+
+    setTimeout(() => {
+      setShowAdded(false);
+    }, 1500);
   };
 
   return (
@@ -88,12 +99,16 @@ const ProductCard = ({ product }) => {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              addToCart(product);
+              handleAddToCart();
             }}
-            className="bg-yellow-600 text-black p-3 rounded-full hover:bg-yellow-500 transition"
-            title="Add to Cart"
+            className={`p-3 rounded-full transition ${
+              showAdded
+                ? 'bg-green-500 text-white'
+                : 'bg-yellow-600 text-black hover:bg-yellow-500'
+            }`}
+            title={showAdded ? 'Added to Cart' : 'Add to Cart'}
           >
-            <ShoppingBag size={20} />
+            {showAdded ? '✓' : <ShoppingBag size={20} />}
           </button>
         </div>
       </div>
@@ -170,10 +185,14 @@ const ProductCard = ({ product }) => {
 
         {/* Add to Cart Button */}
         <button
-          onClick={() => addToCart(product)}
-          className="w-full bg-black text-white py-2 rounded hover:bg-yellow-600 transition duration-300 font-semibold text-sm"
+          onClick={handleAddToCart}
+          className={`w-full py-2 rounded transition duration-300 font-semibold text-sm ${
+            showAdded
+              ? 'bg-green-500 text-white'
+              : 'bg-black text-white hover:bg-yellow-600'
+          }`}
         >
-          ADD TO CART
+          {showAdded ? '✓ ADDED TO CART' : 'ADD TO CART'}
         </button>
       </div>
     </motion.div>
@@ -181,4 +200,3 @@ const ProductCard = ({ product }) => {
 };
 
 export default ProductCard;
-

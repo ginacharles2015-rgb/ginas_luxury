@@ -79,7 +79,7 @@ const ProductProvider = ({ children }) => {
     }
   };
 
-  // Search products by name
+  // Search products by name or category
   const searchProducts = (searchTerm) => {
     if (!searchTerm.trim()) {
       filterByCategory(selectedCategory);
@@ -88,7 +88,10 @@ const ProductProvider = ({ children }) => {
 
     const searched = products.filter(
       (prod) =>
-        prod.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (
+          prod.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          prod.category.toLowerCase().includes(searchTerm.toLowerCase())
+        ) &&
         (selectedCategory === 'All' ||
           prod.category === selectedCategory)
     );

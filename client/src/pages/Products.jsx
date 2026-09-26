@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ProductContext } from '../context/ProductContext';
@@ -6,7 +5,7 @@ import ProductCard from '../components/ProductCard';
 import { motion } from 'framer-motion';
 
 const Products = ({ filter = null }) => {
-  const { products } = useContext(ProductContext);
+  const { products, filteredProducts } = useContext(ProductContext);
 
   const [searchParams] = useSearchParams();
 
@@ -48,8 +47,8 @@ const Products = ({ filter = null }) => {
       });
     }
 
-    // All products
-    return products;
+    // If there is no category filter, use search results
+    return filteredProducts;
   };
 
   const displayProducts = getFilteredProducts();
@@ -113,8 +112,8 @@ const Products = ({ filter = null }) => {
   ];
 
   return (
-   <div className="min-h-screen bg-[#F7F5F0]">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"></div>
+    <div className="min-h-screen bg-[#F7F5F0]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"></div>
 
       {/* Page Title */}
       <div className="text-center mb-12">
@@ -186,9 +185,7 @@ const Products = ({ filter = null }) => {
       )}
 
     </div>
-    
   );
 };
 
 export default Products;
-
